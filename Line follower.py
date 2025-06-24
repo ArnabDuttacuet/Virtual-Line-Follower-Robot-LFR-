@@ -1,19 +1,17 @@
-"""Virtual Line-Follower
----------------------------------
-The robot (blue circle) moves smoothly along a pre-defined curved black path.
-"""
+"""Virtual Line-Follower"""
+
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 
-# -------------------- Path definition --------------------
+# Path definition
 x= np.linspace(10, 90, 1000)
-y= (50
-          + 20 * np.sin(np.pi * (x - 10) / 50)      # broad wave
-          + 10 * np.sin(2 * np.pi * (x - 10) / 30)) # tighter wave
-path = np.column_stack((x, y))                 # (N,2) array
+y= (50 + 
+    20 * np.sin(np.pi * (x - 10) / 50)          # broad wave
+    + 10 * np.sin(2 * np.pi * (x - 10) / 30))   # tighter wave
+path = np.column_stack((x, y))                  # (N,2) array
 
-# -------------------- Figure setup -----------------------
+# Figure setup
 fig, ax = plt.subplots(figsize=(8, 8))
 ax.set_xlim(0, 100)
 ax.set_ylim(0, 100)
@@ -21,14 +19,14 @@ ax.set_aspect('equal')
 ax.set_facecolor('white')
 ax.plot(x, y, 'k', linewidth=8)                # drawing the  road
 
-# -------------------- Robot state ------------------------
+# Robot state 
 robot_pos   = path[0].astype(float)                      # start point
 robot_speed = 5.0                                        # px per frame
 robot_rad   = 2.5
 marker      = plt.Circle(robot_pos, robot_rad, color='royalblue')
 ax.add_patch(marker)
 
-# -------------------- Animation setup -------------------
+# Animation setup 
 next_idx = 1                                             # next waypoint
 def update(_):
     global robot_pos, next_idx
@@ -50,7 +48,7 @@ def update(_):
     marker.center = robot_pos
     return marker,
 
-# -------------------- Run animation ----------------------
+# Run animation
 ani = animation.FuncAnimation(fig,
                               update,
                               frames=len(path)+200,
